@@ -8,13 +8,18 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.mpusinhol.orderquest.domain.Category;
+import com.mpusinhol.orderquest.domain.Product;
 import com.mpusinhol.orderquest.repositories.CategoryRepository;
+import com.mpusinhol.orderquest.repositories.ProductRepository;
 
 @SpringBootApplication
 public class OrderRequestApiApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CategoryRepository categoryRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderRequestApiApplication.class, args);
@@ -25,7 +30,19 @@ public class OrderRequestApiApplication implements CommandLineRunner{
 		Category category1 = new Category(null, "IT");
 		Category category2 = new Category(null, "Office");
 		
+		Product product1 = new Product(null, "Laptop", 2000.00);
+		Product product2 = new Product(null, "Printer", 800.00);
+		Product product3 = new Product(null, "Mouse", 80.00);
+		
+		category1.getProducts().addAll(Arrays.asList(product1, product2, product3));
+		category2.getProducts().add(product2);
+		
+		product1.getCategories().add(category1);
+		product2.getCategories().addAll(Arrays.asList(category1, category2));
+		product3.getCategories().add(category1);
+		
 		categoryRepository.saveAll(Arrays.asList(category1, category2));
+		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.mpusinhol.orderquest.domain.Category;
 import com.mpusinhol.orderquest.repositories.CategoryRepository;
+import com.mpusinhol.orderquest.services.exception.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -18,7 +19,8 @@ public class CategoryService {
 	public Category findById(Integer id) {
 		Optional<Category> category = categoryRepository.findById(id);
 		
-		return category.orElse(null);
+		return category.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found! Id: " + id + ", Type: " + Category.class.getName()));
 	}
 	
 	public List<Category> findAll() {
