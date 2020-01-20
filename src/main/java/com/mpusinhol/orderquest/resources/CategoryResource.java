@@ -27,4 +27,11 @@ public class CategoryResource {
 		
 		return ResponseEntity.ok(category);
 	}
+	
+	@GetMapping
+	public ResponseEntity<?> findAll() {
+		List<Category> categories = categoryService.findAll();
+		
+		return ResponseEntity.ok(categories);
+	}
 }

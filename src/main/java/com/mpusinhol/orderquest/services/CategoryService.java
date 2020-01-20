@@ -1,5 +1,6 @@
 package com.mpusinhol.orderquest.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,11 @@ public class CategoryService {
 		Optional<Category> category = categoryRepository.findById(id);
 		
 		return category.orElse(null);
+	}
+	
+	public List<Category> findAll() {
+		List<Category> categories = categoryRepository.findAll();
+		
+		return categories;
 	}
 }
