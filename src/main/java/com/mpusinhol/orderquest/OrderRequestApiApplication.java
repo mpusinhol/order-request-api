@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.mpusinhol.orderquest.domain.Address;
 import com.mpusinhol.orderquest.domain.Category;
 import com.mpusinhol.orderquest.domain.City;
+import com.mpusinhol.orderquest.domain.Client;
 import com.mpusinhol.orderquest.domain.Product;
 import com.mpusinhol.orderquest.domain.State;
+import com.mpusinhol.orderquest.domain.enums.ClientType;
+import com.mpusinhol.orderquest.repositories.AddressRepository;
 import com.mpusinhol.orderquest.repositories.CategoryRepository;
 import com.mpusinhol.orderquest.repositories.CityRepository;
+import com.mpusinhol.orderquest.repositories.ClientRepository;
 import com.mpusinhol.orderquest.repositories.ProductRepository;
 import com.mpusinhol.orderquest.repositories.StateRepository;
 
@@ -30,6 +35,12 @@ public class OrderRequestApiApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CityRepository cityRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(OrderRequestApiApplication.class, args);
@@ -61,10 +72,21 @@ public class OrderRequestApiApplication implements CommandLineRunner{
 		state1.getCitites().addAll(Arrays.asList(city2, city3));
 		state2.getCitites().addAll(Arrays.asList(city1));
 		
+		Client client1 = new Client(null, "Mary Smith", "mary@gmail.com", "3245765433", ClientType.INDIVIDUALPERSON);
+		
+		client1.getPhones().addAll(Arrays.asList("111111111", "22222222"));
+		
+		Address address1 = new Address(null, "Flowers Street", 300, "Apt 303", "Gardens", "4234324324", client1, city1);
+		Address address2 = new Address(null, "Simcoe Street", 200, "Apt 13", "Downtown", "34234323238", client1, city2);
+		
+		client1.getAddresses().addAll(Arrays.asList(address1, address2));
+		
 		categoryRepository.saveAll(Arrays.asList(category1, category2));
 		productRepository.saveAll(Arrays.asList(product1, product2, product3));
 		stateRepository.saveAll(Arrays.asList(state1, state2));
 		cityRepository.saveAll(Arrays.asList(city1, city2, city3));
+		clientRepository.save(client1);
+		addressRepository.saveAll(Arrays.asList(address1, address2));
 	}
 
 }
