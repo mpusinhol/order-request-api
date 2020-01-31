@@ -17,8 +17,6 @@ import javax.persistence.OneToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 
 @Entity(name = "orders") //Order is a reserved word and cannot be used
 public class Order implements Serializable {
@@ -31,6 +29,7 @@ public class Order implements Serializable {
 	@CreationTimestamp
 	private Date createdAt;
 	
+	
 	@OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
 	private Payment payment;
 	
@@ -38,11 +37,12 @@ public class Order implements Serializable {
 	@JoinColumn(name = "address_id")
 	private Address deliveryAddress;
 	
+	
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	@JsonBackReference
+	
 	@OneToMany(mappedBy = "order")
 	private Set<OrderProduct> orderProducts = new HashSet<>();
 	

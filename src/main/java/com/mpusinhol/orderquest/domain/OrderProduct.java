@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -23,12 +25,12 @@ public class OrderProduct implements Serializable{
 	private Double price;
 	private double discount;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "order_id")
 	private Order order;
 	
-	@JsonManagedReference
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "product_id")
 	private Product product;
@@ -77,6 +79,7 @@ public class OrderProduct implements Serializable{
 		this.discount = discount;
 	}
 
+	@JsonIgnore
 	public Order getOrder() {
 		return order;
 	}
@@ -85,6 +88,7 @@ public class OrderProduct implements Serializable{
 		this.order = order;
 	}
 
+	@JsonIgnore
 	public Product getProduct() {
 		return product;
 	}

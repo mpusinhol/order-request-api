@@ -1,7 +1,5 @@
 package com.mpusinhol.orderquest.resources;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,7 @@ import com.mpusinhol.orderquest.domain.Category;
 import com.mpusinhol.orderquest.services.CategoryService;
 
 @RestController
-@RequestMapping(value="categories")
+@RequestMapping(value="/categories")
 public class CategoryResource {
 	
 	@Autowired

@@ -15,7 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Product implements Serializable {
@@ -28,7 +28,7 @@ public class Product implements Serializable {
 	private String name;
 	private Double price;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(
 			name = "PRODUCT_CATEGORY",
@@ -37,7 +37,7 @@ public class Product implements Serializable {
 	)
 	private List<Category> categories = new ArrayList<>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private Set<OrderProduct> orderProducts = new HashSet<>();
 	
@@ -85,6 +85,7 @@ public class Product implements Serializable {
 		this.orderProducts = orderProducts;
 	}
 	
+	@JsonIgnore
 	public List<Order> getOrders() {
 		List<Order> orders = new ArrayList<>();
 		

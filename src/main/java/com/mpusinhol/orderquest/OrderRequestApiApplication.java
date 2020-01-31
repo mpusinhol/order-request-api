@@ -13,7 +13,6 @@ import com.mpusinhol.orderquest.domain.Category;
 import com.mpusinhol.orderquest.domain.City;
 import com.mpusinhol.orderquest.domain.Client;
 import com.mpusinhol.orderquest.domain.Order;
-//import com.mpusinhol.orderquest.domain.Order;
 import com.mpusinhol.orderquest.domain.Payment;
 import com.mpusinhol.orderquest.domain.PaymentCreditCard;
 import com.mpusinhol.orderquest.domain.PaymentSlip;
