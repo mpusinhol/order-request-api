@@ -20,14 +20,14 @@ public class ClientResource {
 	private ClientService clientService;
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<?> findById(@PathVariable Integer id) {
-		Client client = clientService.findById(id);
+	public ResponseEntity<Client> findById(@PathVariable Integer id) {
+		Client client = clientService.find(id);
 		
 		return ResponseEntity.ok(client);
 	}
 	
 	@GetMapping
-	public ResponseEntity<?> findAll() {
+	public ResponseEntity<List<Client>> findAll() {
 		List<Client> categories = clientService.findAll();
 		
 		return ResponseEntity.ok(categories);
