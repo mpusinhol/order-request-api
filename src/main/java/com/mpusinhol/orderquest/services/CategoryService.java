@@ -28,4 +28,10 @@ public class CategoryService {
 		
 		return categories;
 	}
+	
+	public Category insert(Category category) {
+		category.setId(null);
+
+		return categoryRepository.save(category);
+	}
 }
