@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.mpusinhol.orderquest.domain.Category;
 import com.mpusinhol.orderquest.repositories.CategoryRepository;
+import com.mpusinhol.orderquest.services.exception.DataIntegrityException;
 import com.mpusinhol.orderquest.services.exception.ObjectNotFoundException;
 
 @Service
@@ -40,5 +42,13 @@ public class CategoryService {
 		category.setId(id);
 
 		return categoryRepository.save(category);
+	}
+	
+	public void delete(Integer id) {
+		try {
+			categoryRepository.deleteById(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Cannot delete a category that has products associated");
+		}
 	}
 }
