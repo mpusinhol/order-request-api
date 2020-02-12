@@ -2,6 +2,9 @@ package com.mpusinhol.orderquest.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mpusinhol.orderquest.domain.Category;
+import com.mpusinhol.orderquest.domain.dto.CategoryDTO;
 import com.mpusinhol.orderquest.services.CategoryService;
 
 @RestController
@@ -35,14 +39,16 @@ public class CategoryResource {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<Category>> findAll() {
+	public ResponseEntity<List<CategoryDTO>> findAll() {
 		List<Category> categories = categoryService.findAll();
 		
-		return ResponseEntity.ok(categories);
+		List<CategoryDTO> categoriesDTO = categories.stream().map(category -> new CategoryDTO(category)).collect(Collectors.toList());
+		
+		return ResponseEntity.ok(categoriesDTO);
 	}
 	
 	@GetMapping(value="/page")
-	public ResponseEntity<Page<Category>> findPage(
+	public ResponseEntity<Page<CategoryDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
 			@RequestParam(value="linesPerPage", defaultValue="24") Integer linesPerPage,
 			@RequestParam(value="orderBy", defaultValue="name") String orderBy,
@@ -50,11 +56,14 @@ public class CategoryResource {
 		
 		Page<Category> categories = categoryService.findPage(page, linesPerPage, orderBy, direction);
 		
-		return ResponseEntity.ok(categories);
+		Page<CategoryDTO> categoriesDTO = categories.map(category -> new CategoryDTO(category));
+		
+		return ResponseEntity.ok(categoriesDTO);
 	}
 	
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Category category) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO categoryDTO) {
+		Category category = CategoryDTO.fromDTO(categoryDTO);
 		category = categoryService.insert(category);
 		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -64,7 +73,8 @@ public class CategoryResource {
 	}
 	
 	@PutMapping(value="/{id}")
-	public ResponseEntity<Void> update(@PathVariable Integer id, @RequestBody Category category) {
+	public ResponseEntity<Void> update(@PathVariable Integer id, @Valid @RequestBody CategoryDTO categoryDTO) {
+		Category category = CategoryDTO.fromDTO(categoryDTO);
 		category = categoryService.update(id, category);
 		
 		return ResponseEntity.noContent().build();
