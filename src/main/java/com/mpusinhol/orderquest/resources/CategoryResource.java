@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.mpusinhol.orderquest.domain.Category;
-import com.mpusinhol.orderquest.domain.dto.CategoryDTO;
+import com.mpusinhol.orderquest.dto.CategoryDTO;
 import com.mpusinhol.orderquest.services.CategoryService;
 
 @RestController
