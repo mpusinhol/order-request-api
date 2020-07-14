@@ -18,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.mpusinhol.orderquest.domain.enums.ClientType;
 
 @Entity
-public class Client implements Serializable{
+public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
@@ -49,7 +49,7 @@ public class Client implements Serializable{
 		this.name = name;
 		this.email = email;
 		this.document = document;
-		this.clientType = clientType.getId();
+		this.clientType = clientType == null ? null : clientType.getId();
 	}
 
 	public Integer getId() {
