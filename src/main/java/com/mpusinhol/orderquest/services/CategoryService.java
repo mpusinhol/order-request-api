@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.mpusinhol.orderquest.domain.Category;
+import com.mpusinhol.orderquest.domain.Client;
 import com.mpusinhol.orderquest.repositories.CategoryRepository;
 import com.mpusinhol.orderquest.services.exception.DataIntegrityException;
 import com.mpusinhol.orderquest.services.exception.ObjectNotFoundException;
@@ -41,10 +42,11 @@ public class CategoryService {
 	}
 	
 	public Category update(Integer id, Category category) {
-		find(id);
-		category.setId(id);
+		Category newCategory = find(id);
+		
+		updateData(newCategory, category);
 
-		return categoryRepository.save(category);
+		return categoryRepository.save(newCategory);
 	}
 	
 	public void delete(Integer id) {
@@ -59,5 +61,9 @@ public class CategoryService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		
 		return categoryRepository.findAll(pageRequest);
+	}
+	
+	private void updateData(Category newCategory, Category oldCategory) {
+		newCategory.setName(oldCategory.getName());
 	}
 }
